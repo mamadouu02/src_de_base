@@ -7,11 +7,21 @@ SRCS = $(wildcard *.S *.c)
 # crt0.o doit etre linke en premier
 OBJS = $(strip crt0.o $(filter-out crt0.o,$(notdir $(patsubst %.S,%.o,$(patsubst %.c,%.o,$(SRCS))))))
 
-CC = gcc
-AS = gcc
-LD = ld
-OBJCOPY = objcopy
-QEMU = /usr/bin/qemu-system-i386
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	CC = gcc
+	AS = gcc
+	LD = ld
+	OBJCOPY = objcopy
+	QEMU = /usr/bin/qemu-system-i386
+endif
+ifeq ($(UNAME_S),Darwin)
+	CC = i386-elf-gcc
+	AS = i386-elf-gcc
+	LD = i386-elf-ld
+	OBJCOPY = i386-elf-objcopy
+	QEMU = /opt/local/bin/qemu-system-i386
+endif
 
 CFLAGS = -m32 -Wall -Werror -g -gdwarf -std=c99 -nostdinc -fno-stack-protector -I. -fno-pie
 ASFLAGS = -m32 -DASSEMBLER -g -gdwarf -I.
