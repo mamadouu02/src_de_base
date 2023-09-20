@@ -2,6 +2,7 @@
 #include <inttypes.h>
 #include "console.h"
 #include "ecran.h"
+#include "temps.h"
 
 void kernel_start(void)
 {
@@ -22,6 +23,9 @@ void kernel_start(void)
     efface_ecran();
     place_curseur(HEIGHT - 1, WIDTH - 7);
     console_putbytes("Hello, world!\n", 15);
+    
+    ecrit_temps("14:45:00", 9);
+    init_traitant_IT(32, traitant_IT_32);
 
     // on ne doit jamais sortir de kernel_start
     while (1) {

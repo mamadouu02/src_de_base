@@ -11,11 +11,9 @@
 #define WIDTH 80
 #define NB_CASES (HEIGHT * WIDTH)
 #define FIRST_ADDR 0xB8000
-#define CMD_PORT 0x3D4
-#define DATA_PORT 0x3D5
+#define TAB_SIZE 8
 #define LOW 0x0F
 #define HIGH 0x0E
-#define TAB_SIZE 8
 
 extern uint16_t *ptr_mem(uint32_t lig, uint32_t col);
 
