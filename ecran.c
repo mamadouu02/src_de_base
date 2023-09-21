@@ -29,9 +29,9 @@ void efface_ecran(void)
 void place_curseur(uint32_t lig, uint32_t col)
 {
     uint16_t pos = col + lig * WIDTH;
-    outb(LOW, 0x3D4);
+    outb(0x0F, 0x3D4);
     outb(pos & 0xFF, 0x3D5);
-    outb(HIGH, 0x3D4);
+    outb(0x0E, 0x3D4);
     outb(pos >> 8, 0x3D5);
 
     cur_lig = lig;

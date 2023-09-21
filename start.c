@@ -20,12 +20,16 @@ void kernel_start(void)
     // traite_car('E');
     // defilement();
     
-    efface_ecran();
-    place_curseur(HEIGHT - 1, WIDTH - 7);
-    console_putbytes("Hello, world!\n", 15);
+    // efface_ecran();
+    // place_curseur(HEIGHT - 1, WIDTH - 7);
+    // console_putbytes("Hello, world!\n", 15);
+    // ecrit_temps("14:45:00", 9);
     
-    ecrit_temps("14:45:00", 9);
+    traite_car('\f');
     init_traitant_IT(32, traitant_IT_32);
+    set_clockfreq();
+    masque_IRQ(0, false);
+    sti();
 
     // on ne doit jamais sortir de kernel_start
     while (1) {

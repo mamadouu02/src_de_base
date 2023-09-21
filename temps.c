@@ -1,6 +1,6 @@
 #include "temps.h"
 
-uint32_t *IDT = (uint32_t *)IDT_ADDR;
+uint32_t *idt = (uint32_t *)IDT_ADDR;
 
 void ecrit_temps(const char *s, int len)
 {
@@ -21,6 +21,26 @@ void tic_PIT(void)
 
 void init_traitant_IT(uint32_t num_IT, void (*traitant)(void))
 {
-    IDT[2 * num_IT] = KERNEL_CS << 16 | (uint16_t)traitant;
-    IDT[2 * num_IT + 1] = (uint32_t)traitant && 0xFFFF0000 | 0x8E00;
+    idt[2 * num_IT] = KERNEL_CS << 16 | (uint32_t)traitant && 0xFFFF;
+    idt[2 * num_IT + 1] = (uint32_t)traitant && 0xFFFF0000 | 0x8E00;
+}
+
+void set_clockfreq(void)
+{
+    outb(0x34, 0x43);
+    outb((QUARTZ / CLOCKFREQ) & 0xFF, 0x40);
+    outb((QUARTZ / CLOCKFREQ) >> 8, 0x40);
+}
+
+void masque_IRQ(uint32_t num_IRQ, bool masque)
+{
+    uint8_t mask = inb(0x21);
+
+    if (masque) {
+        mask |= 1 << num_IRQ;
+    } else {
+        mask &= ~(1 << num_IRQ);
+    }
+
+    outb(mask, 0x21);
 }
