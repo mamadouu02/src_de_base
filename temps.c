@@ -15,11 +15,11 @@ void tic_PIT(void)
 {
     outb(0x20, 0x20);
 
-    t.h += t.m == 59;
+    t.h += ((t.m == 59) && (t.s == 59)) % 99;
     t.m = (t.m + (t.s == 59)) % 60;
     t.s = (t.s + 1) % 60;
 
-    char s[12];
+    char s[9];
     sprintf(s, "%02u:%02u:%02u", t.h, t.m, t.s);
     ecrit_temps(s, 9);
 }
