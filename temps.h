@@ -9,6 +9,12 @@
 #define QUARTZ 0x1234DD
 #define CLOCKFREQ 50
 
+struct time {
+    uint8_t h;
+    uint8_t m;
+    uint8_t s;
+};
+
 extern void ecrit_temps(const char *s, int len);
 
 extern void tic_PIT(void);
