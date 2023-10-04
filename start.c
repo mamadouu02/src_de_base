@@ -1,8 +1,11 @@
 #include <cpu.h>
 #include <inttypes.h>
 #include "console.h"
-#include "ecran.h"
-#include "temps.h"
+#include "screen.h"
+#include "time.h"
+#include "process.h"
+
+extern Process process_tab[PROCESS_TAB_SIZE];
 
 void kernel_start(void)
 {
@@ -29,8 +32,20 @@ void kernel_start(void)
     init_traitant_IT(32, traitant_IT_32);
     set_clockfreq();
     masque_IRQ(0, false);
-    sti();
+    // sti();
 
+    process_tab[0].pid = 0;
+    strcpy(process_tab[0].name, "idle");
+    process_tab[0].state = running;
+
+    process_tab[1].pid = 1;
+    strcpy(process_tab[1].name, "proc1");
+    process_tab[1].state = ready;
+    process_tab[1].regs[1] = (uint32_t)(process_tab[1].stack + (STACK_SIZE - 1));
+    process_tab[1].stack[STACK_SIZE - 1] = (uint32_t)proc1;
+
+    idle();
+    
     // on ne doit jamais sortir de kernel_start
     while (1) {
         // cette fonction arrete le processeur

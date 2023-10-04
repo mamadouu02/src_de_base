@@ -1,4 +1,4 @@
-#include "temps.h"
+#include "time.h"
 
 uint8_t tic = 0;
 struct time t = { 0, 0, 0 };

@@ -18,6 +18,6 @@ typedef enum {
     light_magenta,
     yellow,
     white
-} color;
+} Color;
 
 #endif

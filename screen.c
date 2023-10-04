@@ -1,4 +1,4 @@
-#include "ecran.h"
+#include "screen.h"
 
 uint32_t cur_lig = 8;
 uint32_t cur_col = 0;
@@ -8,7 +8,7 @@ uint16_t *ptr_mem(uint32_t lig, uint32_t col)
     return (uint16_t *)FIRST_ADDR + lig * WIDTH + col;
 }
 
-void ecrit_car(uint32_t lig, uint32_t col, char c, color txt_col, color bg_col, bool blink)
+void ecrit_car(uint32_t lig, uint32_t col, char c, Color txt_col, Color bg_col, bool blink)
 {
     uint16_t *ptr = ptr_mem(lig, col);
     *ptr = c;
