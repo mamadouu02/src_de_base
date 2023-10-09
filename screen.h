@@ -1,5 +1,5 @@
-#ifndef ECRAN_H
-#define ECRAN_H
+#ifndef SCREEN_H
+#define SCREEN_H
 
 #include <inttypes.h>
 #include <stdbool.h>
