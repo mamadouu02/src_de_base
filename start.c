@@ -4,8 +4,9 @@
 #include "screen.h"
 #include "time.h"
 #include "process.h"
+#include "tinyalloc.h"
 
-extern Process process_tab[PROCESS_TAB_SIZE];
+extern Process *process_tab[NB_PROC];
 
 void kernel_start(void)
 {
@@ -34,15 +35,18 @@ void kernel_start(void)
     masque_IRQ(0, false);
     // sti();
 
-    process_tab[0].pid = 0;
-    strcpy(process_tab[0].name, "idle");
-    process_tab[0].state = running;
+    process_tab[0] = malloc(sizeof(Process));
+    process_tab[0]->pid = 0;
+    strcpy(process_tab[0]->name, "idle");
+    process_tab[0]->state = running;
 
-    process_tab[1].pid = 1;
-    strcpy(process_tab[1].name, "proc1");
-    process_tab[1].state = ready;
-    process_tab[1].regs[1] = (uint32_t)(process_tab[1].stack + (STACK_SIZE - 1));
-    process_tab[1].stack[STACK_SIZE - 1] = (uint32_t)proc1;
+    cree_processus(proc1, "proc1");
+    cree_processus(proc1, "proc2");
+    cree_processus(proc1, "proc3");
+    cree_processus(proc1, "proc4");
+    cree_processus(proc1, "proc5");
+    cree_processus(proc1, "proc6");
+    cree_processus(proc1, "proc7");
 
     idle();
     

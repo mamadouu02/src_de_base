@@ -4,9 +4,10 @@
 #include <inttypes.h>
 #include <stdio.h>
 #include <cpu.h>
+#include <string.h>
 
 #define STACK_SIZE 512
-#define PROCESS_TAB_SIZE 2
+#define NB_PROC 8
 
 typedef enum {
     running,
@@ -26,5 +27,13 @@ void idle(void);
 void proc1(void);
 
 void ctx_sw(uint32_t *regs1, uint32_t *regs2);
+
+void ordonnance(void);
+
+int32_t mon_pid(void);
+
+char *mon_nom(void);
+
+int32_t cree_processus(void (*code)(void), char *nom);
 
 #endif
