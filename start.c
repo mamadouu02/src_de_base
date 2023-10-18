@@ -4,9 +4,6 @@
 #include "screen.h"
 #include "time.h"
 #include "process.h"
-#include "tinyalloc.h"
-
-extern Process *process_tab[NB_PROC];
 
 void kernel_start(void)
 {
@@ -35,11 +32,8 @@ void kernel_start(void)
     masque_IRQ(0, false);
     // sti();
 
-    process_tab[0] = malloc(sizeof(Process));
-    process_tab[0]->pid = 0;
-    strcpy(process_tab[0]->name, "idle");
-    process_tab[0]->state = running;
-
+    // initialisation des structures de processus
+    cree_idle();
     cree_processus(proc1, "proc1");
     cree_processus(proc1, "proc2");
     cree_processus(proc1, "proc3");
@@ -48,6 +42,7 @@ void kernel_start(void)
     cree_processus(proc1, "proc6");
     cree_processus(proc1, "proc7");
 
+    // demarrage du processus par defaut
     idle();
     
     // on ne doit jamais sortir de kernel_start

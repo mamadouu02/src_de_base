@@ -34,6 +34,8 @@ int32_t mon_pid(void);
 
 char *mon_nom(void);
 
+void cree_idle(void);
+
 int32_t cree_processus(void (*code)(void), char *nom);
 
 #endif
