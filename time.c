@@ -23,7 +23,7 @@ void tic_PIT(void)
         sprintf(s, "%02u:%02u:%02u", t.h, t.m, t.s);
         ecrit_temps(s, 9);
 
-        t.h += ((t.m == 59) && (t.s == 59)) % 100;
+        t.h = (t.h + (t.m == 59) && (t.s == 59)) % 100;
         t.m = (t.m + (t.s == 59)) % 60;
         t.s = (t.s + 1) % 60;
     }
